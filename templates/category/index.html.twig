@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_category_list'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title_category_list'|trans }}</h1>
+    {% if pagination is defined and pagination|length %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ 'label_id'|trans }}</th>
+                <th>{{ 'label_title'|trans }}</th>
+                <th>{{ 'label_createdAt'|trans }}</th>
+                <th>{{ 'label_updatedAt'|trans }}</th>
+                <th scope="col">
+                    {{ 'label_actions'|trans }}
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for category in pagination %}
+                <tr>
+                    <td>{{ category.id }}</td>
+                    <td>{{ category.title }}</td>
+                    <td>{{ category.createdAt|format_date('long') }}</td>
+                    <td>{{ category.updatedAt|format_date('long') }}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action_item_show'|trans }}">
+                                    {{ 'action_item_show'|trans }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action_item_edit' }}">
+                                    {{ 'action_item_edit'|trans }}
+                                </a>
+                            </li>
+                            {% if not category.tasks|length %}
+                                <li>
+                                    <a href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action_delete'|trans }}">
+                                        {{ 'action_delete'|trans }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+        <div class="creation text-center">
+            <a href="{{ url('category_create') }}" title="{{ 'action_create_new_item'|trans }}">
+                {{ 'action_create_new_item'|trans}}
+            </a>
+        </div>
+
+    {% else %}
+        {% include 'default/_single_flash_message.html.twig' with {
+            type: 'warning',
+            message: 'message_empty_list'|trans
+        } %}
+    {% endif %}
+{% endblock  %}
