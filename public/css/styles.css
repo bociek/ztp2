@@ -1,0 +1,33 @@
+p {
+    color: red;
+}
+
+th {
+    text-align: center;
+}
+
+td {
+    text-align: center;
+}
+
+li {
+    display: block;
+    list-style: none;
+    font-family: sans-serif;
+}
+
+.creation {
+    font-family: sans-serif;
+}
+
+.navigation {
+    font-family: sans-serif;
+}
+
+form label {
+    font-weight: bold;
+}
+
+form label.required:after {
+    content: ' *'
+}
