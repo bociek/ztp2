@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_homepage'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'Witaj w Internetowej Wypożyczalni!' }}</h1>
+
+    {% if is_granted('IS_AUTHENICATED_REMEMBERED') %}
+        {{ 'Witaj ' . app.user.firstName }}
+    {% endif %}
+
+    <ul>
+        <li>
+            <a href="{{ url('task_index') }}" title="{{ 'title_task_list'|trans }}">
+                {{ 'Pokaż listę zadań' }}
+            </a>
+        </li>
+        <li>
+            <a href="{{ url('category_index') }}" title="{{ 'title_category_list'|trans }}">
+                {{ 'Pokaż listę kategorii' }}
+            </a>
+        </li>
+        <li>
+            <a href="{{ url('tag_index') }}" title="{{ 'title_tag_list'|trans }}">
+                {{ 'Pokaż listę tagów' }}
+            </a>
+        </li>
+    </ul>
+
+    {% if is_granted('IS_AUTHENICATED_REMEMBERED') %}
+        <div>
+            <a href="{{ url('app_logout') }}" title="{{ 'action_logout'|trans }}">
+                {{ 'action_logout' }}
+            </a>
+        </div>
+    {% endif %}
+
+    {% if is_granted('IS_AUTHENICATED_ANONYMOUSLY') %}
+        <div>
+            <a href="{{ url('app_login') }}" title="{{ 'action_login'|trans }}">
+                {{ 'action_login' }}
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}
